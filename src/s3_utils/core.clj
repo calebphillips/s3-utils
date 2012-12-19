@@ -37,7 +37,11 @@
         (recur (.listObjects s3client req))))))
 
 (defn -h [n]
-  (str (float (/ n (* 1024 1024))) " M"))
+  (let [sizes {0 "B" 1 "K" 2 "M" 3 "G"}]
+    (loop [n n its 0]
+      (if (< n 1024)
+        (str n (sizes its))
+        (recur (float (/ n 1024)) (inc its))))))
 
 (defn create-listener []
   (let [bytes (atom 0)]

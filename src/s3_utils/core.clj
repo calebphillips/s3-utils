@@ -36,11 +36,15 @@
       (if (.isTruncated listing)
         (recur (.listObjects s3client req))))))
 
+(defn -h [n]
+  (str (float (/ n (* 1024 1024))) " M"))
+
 (defn create-listener []
-  (proxy [ProgressListener] []
-    (progressChanged [event]
-      (println (str "Transferred bytes: "
-                    (.getBytesTransfered event))))))
+  (let [bytes (atom 0)]
+    (proxy [ProgressListener] []
+      (progressChanged [event]
+        (swap! bytes + (.getBytesTransfered event))
+        (println (str "Bytes transferred so far: " (-h @bytes)))))))
 
 (defn upload [bucket-name key file]
   (println "Uploading")

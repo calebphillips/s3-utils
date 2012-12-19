@@ -1,13 +1,6 @@
 # s3-utils
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
-
-## License
-
-Copyright © 2012 FIXME
+Quick translation of the example Java program to do multipart uploads, so that 
+I can upload my large photo archives.
 
 Distributed under the Eclipse Public License, the same as Clojure.
